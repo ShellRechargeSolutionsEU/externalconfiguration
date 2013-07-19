@@ -5,12 +5,13 @@
 
 ### Manual use
 
+By default it will configure logback, typesafe config, lift props
 ```scala
-  // by default it will configure logback, typesafe config, lift props
   ExternalConfiguration.load()
+```
 
-
-  // if default options are not enough for you
+If default options are not enough for you
+```scala
   val myConfConfigurable: ExternalConfiguration.Configurable = propsDirPath => {
     val myConf = propsDirPath + "/myconf.myconf"
     // use myconf
