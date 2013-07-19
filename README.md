@@ -13,7 +13,7 @@ Btw, if you don't need any of those, it will not add any odd dependencies to you
 
 ### Manual use
 
-To make something happen you need to make this call prior any other applications calls
+To make something happen you need to call `ExternalConfiguration.load()` prior any other application calls
 
 ```scala
   import com.thenewmotion.externalconfiguration.ExternalConfiguration
