@@ -16,6 +16,8 @@ Btw, if you don't need any of those, it will not add any odd dependencies to you
 To make something happen you need to make this call prior any other applications calls
 
 ```scala
+  import com.thenewmotion.externalconfiguration.ExternalConfiguration
+
   ExternalConfiguration.load()
 ```
 
