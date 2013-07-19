@@ -16,19 +16,21 @@ object ExternalConfiguration {
    * Should be called prior any other application calls
    */
   def load(configurables: List[Configurable] = defaultConfigurables) {
-    Properties.propOrNone(propsDirName) match {
-      case Some(propsDir) => load(propsDir, configurables)
-      case None =>
-        val catalinaHomeName = "CATALINA_HOME"
-        Properties.envOrNone(catalinaHomeName) match {
-          case Some(catalinaHome) =>
-            val propsSuffix = "/props"
-            val propsDir = catalinaHome + propsSuffix
-            warn(s"$propsDirName is not configured, using $catalinaHomeName$propsSuffix: $propsDir")
-            load(propsDir, configurables)
-          case None =>
-            warn(s"$propsDirName is not configured, make sure you started application with -D$propsDirName=<valid dir>")
-        }
+    def propsDirIn(key: String, value: String => Option[String]) = value(key).map {
+      path =>
+        val propsSuffix = "/props"
+        val propsDir = path + propsSuffix
+        warn(s"$propsDirName is not configured, using {$key}$propsSuffix: $propsDir")
+        propsDir
+    }
+
+    def propsDir = Properties.propOrNone(propsDirName)
+    def catalinaHomeEnv = propsDirIn("CATALINA_HOME", Properties.envOrNone)
+    def catalinaHomeSys = propsDirIn("catalina.home", Properties.propOrNone)
+
+    propsDir orElse catalinaHomeEnv orElse catalinaHomeSys match {
+      case Some(dir) => load(dir, configurables)
+      case None => warn(s"$propsDirName is not configured, make sure you started application with -D$propsDirName=<valid dir>")
     }
   }
 
