@@ -1,16 +1,25 @@
 # External Configuration [![Build Status](https://secure.travis-ci.org/thenewmotion/externalconfiguration.png)](http://travis-ci.org/thenewmotion/externalconfiguration)
 
-## Examples
+This `thing` will load configuration from external folder, which you need to specify with `-Dprops.dir` system property
 
+Out of the box it supports:
+* [logback](http://logback.qos.ch)
+* [typesafe config](https://github.com/typesafehub/config#readme)
+* [lift props](https://www.assembla.com/wiki/show/liftweb/Properties)
+
+Btw, if you don't need any of those, it will not add any odd dependencies to your project
+
+## Examples
 
 ### Manual use
 
-By default it will configure logback, typesafe config, lift props
+To make something happen you need to make this call prior any other applications calls
+
 ```scala
   ExternalConfiguration.load()
 ```
 
-If default options are not enough for you
+If default options are not enough, you can add own function of type `String => Any` also knows as `Configurable`
 ```scala
   val myConfConfigurable: ExternalConfiguration.Configurable = propsDirPath => {
     val myConf = propsDirPath + "/myconf.myconf"
@@ -20,7 +29,7 @@ If default options are not enough for you
   ExternalConfiguration.load(ExternalConfiguration.defaultConfigurables + myConfConfigurable)
 ```
 
-### Spray web.xml
+### Lift web.xml
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -43,8 +52,7 @@ If default options are not enough for you
 </web-app>
 ```
 
-
-### Lift web.xml
+### Spray web.xml
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -73,8 +81,6 @@ If default options are not enough for you
     </servlet-mapping>
 </web-app>
 ```
-
-
 
 ## Setup
 
