@@ -34,19 +34,6 @@ object ExternalConfiguration {
     }
   }
 
-  def error(msg: String) {
-    println(s"ERROR: $msg")
-  }
-
-  def info(msg: String) {
-    println(s"INFO: $msg")
-
-  }
-
-  def warn(msg: String) {
-    println(s"WARN: $msg")
-  }
-
   val defaultConfigurables: List[Configurable] = List(liftPropsConfigurable, configConfigurable, logbackConfigurable)
 
   def load(propsDirPath: String, configurables: List[Configurable]) {
@@ -71,18 +58,6 @@ object ExternalConfiguration {
     }
   }
 
-  def fileOrWarn(file: File, label: String): Option[File] = {
-    if (file.exists() && file.isFile && file.canRead) Some(file)
-    else {
-      if (!file.exists()) warn(s"$label: $file does not exist")
-      else if (!file.isFile) warn(s"$label: $file is not a file")
-      else if (!file.canRead) warn(s"$label: Can't read $file")
-      None
-    }
-  }
-
-  def onClassPath(className: String): Boolean = Try(() => getClass.getClassLoader.loadClass(className)).isSuccess
-
   def configConfigurable(propsDirPath: String) {
     if (onClassPath("com.typesafe.config.Config")) {
       fileOrWarn(new File(propsDirPath + "/application.conf"), "CONFIG").foreach {
@@ -96,4 +71,20 @@ object ExternalConfiguration {
       file => Properties.setProp("logback.configurationFile", file.getPath)
     }
   }
+
+  def fileOrWarn(file: File, label: String): Option[File] = {
+    if (file.exists() && file.isFile && file.canRead) Some(file)
+    else {
+      if (!file.exists()) warn(s"$label: $file does not exist")
+      else if (!file.isFile) warn(s"$label: $file is not a file")
+      else if (!file.canRead) warn(s"$label: Can't read $file")
+      None
+    }
+  }
+
+  def onClassPath(className: String): Boolean = Try(() => getClass.getClassLoader.loadClass(className)).isSuccess
+
+  def error(msg: String) { println(s"ERROR: $msg") }
+  def info(msg: String) { println(s"INFO: $msg") }
+  def warn(msg: String) { println(s"WARN: $msg") }
 }
