@@ -9,7 +9,7 @@
 
     <groupId>com.thenewmotion</groupId>
     <artifactId>externalconfiguration_2.10</artifactId>
-    <version>1.0</version>
+    <version>1.1-SNAPSHOT</version>
 
     <name>External Configuration</name>
     <url>http://github.com/thenewmotion/externalconfiguration</url>
