@@ -100,6 +100,6 @@ If default options are not enough, you can add own function of type `String => A
     <dependency>
         <groupId>com.thenewmotion</groupId>
         <artifactId>externalconfiguration_2.10</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0</version>
     </dependency>
 ```
