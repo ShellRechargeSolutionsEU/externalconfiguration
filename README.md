@@ -86,20 +86,9 @@ If default options are not enough, you can add own function of type `String => A
 
 ## Setup
 
-1. Add this repository to your pom.xml:
-```xml
-    <repository>
-        <id>thenewmotion</id>
-        <name>The New Motion Repository</name>
-        <url>http://nexus.thenewmotion.com/content/groups/public/</url>
-    </repository>
-```
-
-2. Add dependency to your pom.xml:
-```xml
-    <dependency>
-        <groupId>com.thenewmotion</groupId>
-        <artifactId>externalconfiguration_2.10</artifactId>
-        <version>1.0</version>
-    </dependency>
+1. Add this to your build file:
+```scala
+  resolvers += "tnm-public" at "http://nexus.thenewmotion.com/content/groups/public"
+  ...
+  libraryDependencies ++= "com.thenewmotion" %% "externalconfiguration" % "2.0"
 ```
