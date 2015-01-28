@@ -4,6 +4,7 @@ import tnm.ScalaVersion.curr
 val externalconfiguration = project.in(file("."))
   .enablePlugins(OssLibPlugin)
   .settings(
+    organization := "com.thenewmotion",
     libraryDependencies ++= {
       val v = if (scalaVersion.value == curr) "2.6" else "2.5.1"
       Seq(
